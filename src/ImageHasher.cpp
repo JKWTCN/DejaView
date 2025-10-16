@@ -5,7 +5,7 @@
 #include <algorithm>
 
 // 平均哈希
-std::string ImageHasher::averageHash(const cv::Mat &image)
+uint64_t ImageHasher::averageHash(const cv::Mat &image)
 {
     cv::Mat resized, gray;
 
@@ -26,12 +26,12 @@ std::string ImageHasher::averageHash(const cv::Mat &image)
     double mean = cv::mean(gray)[0];
 
     // 生成哈希
-    std::string hash;
+    uint64_t hash = 0;
     for (int i = 0; i < gray.rows; i++)
     {
         for (int j = 0; j < gray.cols; j++)
         {
-            hash += (gray.at<uchar>(i, j) > mean) ? "1" : "0";
+            hash = (hash << 1) | ((gray.at<uchar>(i, j) > mean) ? 1 : 0);
         }
     }
 
@@ -39,7 +39,7 @@ std::string ImageHasher::averageHash(const cv::Mat &image)
 }
 
 // 差异哈希
-std::string ImageHasher::differenceHash(const cv::Mat &image)
+uint64_t ImageHasher::differenceHash(const cv::Mat &image)
 {
     cv::Mat resized, gray;
 
@@ -57,12 +57,12 @@ std::string ImageHasher::differenceHash(const cv::Mat &image)
     }
 
     // 计算相邻像素差异
-    std::string hash;
+    uint64_t hash = 0;
     for (int i = 0; i < gray.rows; i++)
     {
         for (int j = 0; j < gray.cols - 1; j++)
         {
-            hash += (gray.at<uchar>(i, j + 1) > gray.at<uchar>(i, j)) ? "1" : "0";
+            hash = (hash << 1) | ((gray.at<uchar>(i, j + 1) > gray.at<uchar>(i, j)) ? 1 : 0);
         }
     }
 
@@ -70,7 +70,7 @@ std::string ImageHasher::differenceHash(const cv::Mat &image)
 }
 
 // 感知哈希（DCT实现）
-std::string ImageHasher::perceptualHash(const cv::Mat &image)
+uint64_t ImageHasher::perceptualHash(const cv::Mat &image)
 {
     cv::Mat resized, gray, floatGray, dctMat;
 
@@ -113,14 +113,14 @@ std::string ImageHasher::perceptualHash(const cv::Mat &image)
     float median = values[values.size() / 2];
 
     // 生成哈希
-    std::string hash;
+    uint64_t hash = 0;
     for (int i = 0; i < lowFreq.rows; i++)
     {
         for (int j = 0; j < lowFreq.cols; j++)
         {
             if (i == 0 && j == 0)
                 continue; // 跳过DC分量
-            hash += (lowFreq.at<float>(i, j) > median) ? "1" : "0";
+            hash = (hash << 1) | ((lowFreq.at<float>(i, j) > median) ? 1 : 0);
         }
     }
 
@@ -128,47 +128,54 @@ std::string ImageHasher::perceptualHash(const cv::Mat &image)
 }
 
 // 汉明距离
-int ImageHasher::hammingDistance(const std::string &hash1, const std::string &hash2)
+int ImageHasher::hammingDistance(uint64_t hash1, uint64_t hash2)
 {
-    if (hash1.length() != hash2.length())
+    uint64_t xor_result = hash1 ^ hash2;
+    int distance = 0;
+
+    // 计算异或结果中1的位数
+    while (xor_result)
     {
-        return -1;
+        distance += xor_result & 1;
+        xor_result >>= 1;
     }
 
-    int distance = 0;
-    for (size_t i = 0; i < hash1.length(); i++)
-    {
-        if (hash1[i] != hash2[i])
-        {
-            distance++;
-        }
-    }
     return distance;
 }
 
 // 计算相似度（0-1之间）
-double ImageHasher::similarity(const std::string &hash1, const std::string &hash2)
+double ImageHasher::similarity(uint64_t hash1, uint64_t hash2)
 {
     int distance = hammingDistance(hash1, hash2);
-    if (distance == -1)
-        return 0.0;
 
-    return 1.0 - (double)distance / hash1.length();
+    // 假设哈希长度为64位
+    return 1.0 - (double)distance / 64.0;
 }
 
-// 二进制哈希转十六进制
-std::string ImageHasher::binaryToHex(const std::string &binaryHash)
+// 整数哈希转十六进制字符串
+std::string ImageHasher::hashToHex(uint64_t hash)
 {
     std::string hexHash;
-    for (size_t i = 0; i < binaryHash.length(); i += 4)
+    const char hexDigits[] = "0123456789abcdef";
+
+    // 从最高位开始处理
+    bool leadingZero = true;
+    for (int i = 60; i >= 0; i -= 4)
     {
-        std::string nibble = binaryHash.substr(i, 4);
-        int value = 0;
-        for (char c : nibble)
+        int nibble = (hash >> i) & 0xF;
+        if (leadingZero && nibble == 0 && i > 0)
         {
-            value = (value << 1) | (c - '0');
+            continue; // 跳过前导零
         }
-        hexHash += "0123456789abcdef"[value];
+        leadingZero = false;
+        hexHash += hexDigits[nibble];
     }
+
+    // 如果全为零，返回"0"
+    if (hexHash.empty())
+    {
+        hexHash = "0";
+    }
+
     return hexHash;
 }

@@ -11,10 +11,13 @@ int main()
     std::wstring path3=L"D:/Temporary/2510/16/3.jpg";
     std::wstring path4=L"D:/Temporary/2510/16/4.jpg";
     std::wstring path5=L"D:/Temporary/2510/16/5.jpg";
+    std::wstring path6 = L"D:/Temporary/2510/16/6.jpg";
     auto image1=loadImage(path1);
-    //auto image2=cv::imread(std::filesystem::path(path2).string());
-    //auto image3=cv::imread(std::filesystem::path(path3).string());
-    //auto image4=cv::imread(std::filesystem::path(path4).string());
-    //auto image5=cv::imread(std::filesystem::path(path5).string());
-	std::cout<<ImageHasher::perceptualHash(image1)<<std::endl;
+    auto image2=loadImage(path2);
+    auto image3=loadImage(path3);
+    auto image4=loadImage(path4);
+    auto image5=loadImage(path5);
+    auto image6 = loadImage(path6);
+    uint64_t distance = hammingDistanceOptimized(ImageHasher::perceptualHash(image2), ImageHasher::perceptualHash(image5));
+    std::cout << distance << std::endl;
 }
