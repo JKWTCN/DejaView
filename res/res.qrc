@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/res">
+        <file>filefolder.png</file>
+        <file>save.png</file>
+        <file>auto.png</file>
+        <file>cfg_load.png</file>
+        <file>left.png</file>
+        <file>refresh.png</file>
+        <file>right.png</file>
+        <file>setting.png</file>
+        <file>start.png</file>
+        <file>warning.png</file>
+        <file>bottom_to_top.png</file>
+        <file>delete_all.png</file>
+        <file>delete_bottom.png</file>
+        <file>delete_top.png</file>
+        <file>top_to_bottom.png</file>
+    </qresource>
+</RCC>

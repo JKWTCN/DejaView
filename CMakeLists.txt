@@ -60,6 +60,7 @@ else()
     else()
         add_executable(DejaView
             ${PROJECT_SOURCES}
+            res/res.qrc
         )
     endif()
 
