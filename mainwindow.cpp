@@ -1,8 +1,10 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "ui/pathdialog.h"
 #include <qtoolbar.h>
+#include <QPushButton>
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
+    : QMainWindow(parent), ui(new Ui::MainWindow), pathDiglog(nullptr)
 {
     ui->setupUi(this);
     QToolBar *mainBar = new QToolBar(this);
@@ -17,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     mainBar->addAction(refreshResultBtn);
     QAction *openFolderBtn = new QAction(QIcon(":/res/filefolder.png"), "Open Folder", this);
     mainBar->addAction(openFolderBtn);
+    connect(openFolderBtn, &QAction::triggered, this, &MainWindow::openPathWindow);
     QAction *lastStepBtn = new QAction(QIcon(":/res/left.png"), "Last Step", this);
     mainBar->addAction(lastStepBtn);
     QAction *nextStepBtn = new QAction(QIcon(":/res/right.png"), "Next Step", this);
@@ -41,4 +44,15 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::openPathWindow()
+{
+    if (!pathDiglog)
+    {
+        pathDiglog = new PathDialog(this);
+    }
+    pathDiglog->show();           // 显示新窗口
+    pathDiglog->raise();          // 将窗口提到最前面
+    pathDiglog->activateWindow(); // 激活窗口
 }

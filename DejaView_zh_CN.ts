@@ -51,4 +51,61 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>PathDialog</name>
+    <message>
+        <location filename="ui/pathdialog.ui" line="14"/>
+        <location filename="build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/DejaView_autogen/include/ui_pathdialog.h" line="109"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ui/pathdialog.ui" line="24"/>
+        <location filename="build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/DejaView_autogen/include/ui_pathdialog.h" line="110"/>
+        <source>Seach</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ui/pathdialog.ui" line="29"/>
+        <location filename="build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/DejaView_autogen/include/ui_pathdialog.h" line="111"/>
+        <source>Ignore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ui/pathdialog.ui" line="34"/>
+        <location filename="build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/DejaView_autogen/include/ui_pathdialog.h" line="112"/>
+        <source>Valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ui/pathdialog.ui" line="39"/>
+        <location filename="build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/DejaView_autogen/include/ui_pathdialog.h" line="113"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ui/pathdialog.ui" line="49"/>
+        <location filename="build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/DejaView_autogen/include/ui_pathdialog.h" line="114"/>
+        <source>Add Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ui/pathdialog.ui" line="56"/>
+        <location filename="build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/DejaView_autogen/include/ui_pathdialog.h" line="115"/>
+        <source>Add Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ui/pathdialog.ui" line="63"/>
+        <location filename="build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/DejaView_autogen/include/ui_pathdialog.h" line="116"/>
+        <source>Change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="ui/pathdialog.ui" line="70"/>
+        <location filename="build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/DejaView_autogen/include/ui_pathdialog.h" line="117"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

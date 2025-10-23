@@ -61,6 +61,7 @@ else()
         add_executable(DejaView
             ${PROJECT_SOURCES}
             res/res.qrc
+            ui/pathdialog.h ui/pathdialog.cpp ui/pathdialog.ui
         )
     endif()
 
